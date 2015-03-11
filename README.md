@@ -18,7 +18,9 @@ dfcnpqdblp = pd.read_csv(DATASET+'cnpq/cnpq-dblp.csv',index_col=0)
 ```python
 def readgz(url):
     return gzip.GzipFile(fileobj=StringIO.StringIO(requests.get(url).content))
+```
 
+```python
 dfdblpauthors = pd.read_csv(readgz(DATASET+'dblp/authors.csv.gz'),header=None,names=['Akey'])
 dfdblppapers = pd.read_csv(readgz(DATASET+'dblp/papers.csv.gz'),header=None,sep='\t',names=['PKey','Year','VID'])
 dfdblpvenues = pd.read_csv(readgz(DATASET+'dblp/venues.csv.gz'),header=None,names=['Vkey'])
