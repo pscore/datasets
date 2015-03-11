@@ -1,8 +1,10 @@
-# P-score Datasets
+# P-score datasets
 
 ```python
 DATASET = 'https://raw.githubusercontent.com/pscore/datasets/master/'
 ```
+
+## CNPq
 
 ```python
 dfcnpq     = pd.read_csv(DATASET+'cnpq/cnpq.csv',index_col=0)
