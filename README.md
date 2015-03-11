@@ -1,6 +1,7 @@
 # P-score datasets
 
 ```python
+import pandas as pd
 DATASET = 'https://raw.githubusercontent.com/pscore/datasets/master/'
 ```
 
