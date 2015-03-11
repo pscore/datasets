@@ -28,5 +28,5 @@ dfdblpauthors.index = range(1,dfdblpauthors.shape[0]+1)
 dfdblppapers = pd.read_csv(readgz(DATASET+'dblp/papers.csv.gz'),header=None,sep='\t',names=['PKey','Year','VID'])
 dfdblppapers.index = range(1,dfdblppapers.shape[0]+1)
 
-dfdblpauthorpaper = pd.read_csv(DATASET+'dblp/authorpaper.csv.gz',header=None,names=['AID','PID'],index_col=0)
+dfdblpauthorpaper = pd.read_csv(readgz(DATASET+'dblp/authorpaper.csv.gz'),header=None,names=['AID','PID'],index_col=0)
 ```
