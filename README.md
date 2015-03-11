@@ -16,8 +16,6 @@ dfcnpqdblp = pd.read_csv(DATASET+'cnpq/cnpq-dblp.csv',index_col=0)
 ## DBLP
 
 ```python
-url = urllib.urlopen(DATASET+'dblp/venues.csv.gz')
-url_f = StringIO.StringIO(url.read())
-gz = gzip.GzipFile(fileobj=url_f)
-dfdblpvenues = pd.read_csv(gz)
+f = urllib.urlopen(DATASET+'dblp/venues.csv.gz')
+dfdblpvenues = pd.read_csv(gzip.GzipFile(fileobj=StringIO.StringIO(f.read())))
 ```
