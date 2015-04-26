@@ -26,3 +26,8 @@ dfdblppapers = pd.read_csv(readgz(DATASET+'dblp/papers.csv.gz'),header=None,sep=
 dfdblpvenues = pd.read_csv(readgz(DATASET+'dblp/venues.csv.gz'),header=None,names=['Vkey'])
 dfdblpauthorpaper = pd.read_csv(readgz(DATASET+'dblp/authorpaper.csv.gz'),header=None,names=['AID','PID'],index_col=0)
 ```
+
+## Joins
+```python
+dfdblpauthors.join(dfdblpauthorpaper) # AID,Akey,PID
+```
