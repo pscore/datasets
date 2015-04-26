@@ -17,7 +17,12 @@ dfcnpqdblp = pd.read_csv(DATASET+'cnpq/cnpq-dblp.csv',index_col=0)
 
 ```python
 def readgz(url):
-    return gzip.GzipFile(fileobj=StringIO.StringIO(requests.get(url).content))
+    if url[:4] == 'http':
+        content = requests.get(url).content
+    else:
+        with open(url) as f:
+            content = open(url).read()
+    return gzip.GzipFile(fileobj=StringIO.StringIO(content))
 ```
 
 ```python
