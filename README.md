@@ -27,7 +27,13 @@ dfdblpvenues = pd.read_csv(readgz(DATASET+'dblp/venues.csv.gz'),header=None,name
 dfdblpauthorpaper = pd.read_csv(readgz(DATASET+'dblp/authorpaper.csv.gz'),header=None,names=['AID','PID'],index_col=0)
 ```
 
-## Joins
+## Main DataFrame
 ```python
-dfdblpauthors.join(dfdblpauthorpaper) # AID,Akey,PID
+dfdblpauthors = dfdblpauthors[:5000] # selecting 5k authors
+authorpaper = dfdblpauthors.join(dfdblpauthorpaper)
+authorpaper['AID'] = authorpaper.index
+dfdblp = authorpaper.set_index(authorpaper.PID).join(dfdblppapers)
+dfdblp = dfdblp.set_index(dfdblp.VID).join(dfdblpvenues)
+dfdblp = dfdblp.sort(['AID','VID','PID']).set_index(authorpaper.AID)
+del dfdblp['AID']
 ```
