@@ -46,8 +46,8 @@ del dfdblp['AID']
 ## Statistics
 ```python
 # number of publications of authors
-dfdblpauthors['APsize'] = dfdblp.PID.groupby(level=0).agg('count')
+dfdblpauthors['APsize'] = dfdblp.PID.groupby(level=0).count()
 # number of publications and year of 1st publication of venues
-dfdblpvenues['VPsize'] = dfdblp.drop_duplicates('Pkey').groupby('VID').VID.agg('count')
-dfdblpvenues['VPyear'] = dfdblp.drop_duplicates('Pkey').groupby('VID').Year.agg('min')
+dfdblpvenues['VPsize'] = dfdblp.drop_duplicates('Pkey').groupby('VID').VID.count()
+dfdblpvenues['VPyear'] = dfdblp.drop_duplicates('Pkey').groupby('VID').Year.min()
 ```
