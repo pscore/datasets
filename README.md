@@ -17,7 +17,12 @@ dfcnpqdblp = pd.read_csv(DATASET+'cnpq/cnpq-dblp.csv',index_col=0)
 
 ```python
 def readgz(url):
-    return gzip.GzipFile(fileobj=StringIO.StringIO(requests.get(url).content))
+    if url[:4] == 'http':
+        content = requests.get(url).content
+    else:
+        with open(url) as f:
+            content = open(url).read()
+    return gzip.GzipFile(fileobj=StringIO.StringIO(content))
 ```
 
 ```python
@@ -25,4 +30,24 @@ dfdblpauthors = pd.read_csv(readgz(DATASET+'dblp/authors.csv.gz'),header=None,na
 dfdblppapers = pd.read_csv(readgz(DATASET+'dblp/papers.csv.gz'),header=None,sep='\t',names=['PKey','Year','VID'])
 dfdblpvenues = pd.read_csv(readgz(DATASET+'dblp/venues.csv.gz'),header=None,names=['Vkey'])
 dfdblpauthorpaper = pd.read_csv(readgz(DATASET+'dblp/authorpaper.csv.gz'),header=None,names=['AID','PID'],index_col=0)
+```
+
+## Main DataFrame
+```python
+dfdblpauthors = dfdblpauthors[:5000] # selecting 5k authors
+authorpaper = dfdblpauthors.join(dfdblpauthorpaper)
+authorpaper['AID'] = authorpaper.index
+dfdblp = authorpaper.set_index(authorpaper.PID).join(dfdblppapers)
+dfdblp = dfdblp.set_index(dfdblp.VID).join(dfdblpvenues)
+dfdblp = dfdblp.sort(['AID','VID','PID']).set_index(authorpaper.AID)
+del dfdblp['AID']
+```
+
+## Statistics
+```python
+# number of publications of authors
+dfdblpauthors['APsize'] = dfdblp.PID.groupby(level=0).count()
+# number of publications and year of 1st publication of venues
+dfdblpvenues['VPsize'] = dfdblp.drop_duplicates('Pkey').groupby('VID').VID.count()
+dfdblpvenues['VPyear'] = dfdblp.drop_duplicates('Pkey').groupby('VID').Year.min()
 ```
